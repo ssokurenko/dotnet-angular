@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Server.Models;
 using Server.Services;
 
 namespace Server.Controllers;
@@ -8,6 +9,7 @@ namespace Server.Controllers;
 public class AnomaliesController(ReadingsStore store) : ControllerBase
 {
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Anomaly>), StatusCodes.Status200OK)]
     public IActionResult Get() =>
         Ok(store.GetRecentAnomalies(ReadingsStore.MaxAnomalies));
 }

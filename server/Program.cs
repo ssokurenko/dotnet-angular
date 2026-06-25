@@ -1,3 +1,5 @@
+using System.Reflection;
+using Microsoft.OpenApi;
 using Server.Hubs;
 using Server.Services;
 
@@ -6,6 +8,26 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddSignalR();
+
+// OpenAPI / Swagger documentation for the REST endpoints.
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Greenhouse Guard API",
+        Version = "v1",
+        Description = "Real-time greenhouse sensor readings and z-score anomaly detection."
+    });
+
+    // Surface the /// summaries from controllers and models.
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        options.IncludeXmlComments(xmlPath);
+    }
+});
 
 // In-memory store for readings + anomalies
 builder.Services.AddSingleton<ReadingsStore>();
@@ -35,6 +57,16 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+// Swagger UI at /swagger (JSON at /swagger/v1/swagger.json) in development.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Greenhouse Guard API v1");
+    });
+}
 
 app.UseHttpsRedirection();
 

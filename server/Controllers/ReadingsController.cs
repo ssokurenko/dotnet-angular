@@ -13,6 +13,8 @@ public class ReadingsController(ReadingsStore store, ReadingIngestor ingestor) :
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
     [HttpGet("latest")]
+    [ProducesResponseType(typeof(SensorReading), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public IActionResult GetLatest()
     {
         var latest = store.GetLatest();
@@ -20,6 +22,9 @@ public class ReadingsController(ReadingsStore store, ReadingIngestor ingestor) :
     }
 
     [HttpPost]
+    [Consumes("application/json")]
+    [ProducesResponseType(typeof(IEnumerable<SensorReading>), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] JsonElement body, CancellationToken cancellationToken)
     {
         List<SensorReading> incoming;
