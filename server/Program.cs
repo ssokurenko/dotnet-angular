@@ -19,6 +19,9 @@ builder.Services.AddSingleton<IReadingBroadcaster, SignalRReadingBroadcaster>();
 // Shared store -> detect -> broadcast pipeline for POST and the simulator.
 builder.Services.AddSingleton<ReadingIngestor>();
 
+// Generates mock greenhouse readings every ~2s (real-time streaming).
+builder.Services.AddHostedService<SensorSimulator>();
+
 // 1. Define the CORS policy
 builder.Services.AddCors(options =>
 {
