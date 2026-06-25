@@ -4,8 +4,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-// In-memory store for readings + anomalies (FEATURE-01).
+// In-memory store for readings + anomalies
 builder.Services.AddSingleton<ReadingsStore>();
+
+// Z-score anomaly detection
+builder.Services.AddSingleton<AnomalyDetector>();
 
 // 1. Define the CORS policy
 builder.Services.AddCors(options =>
