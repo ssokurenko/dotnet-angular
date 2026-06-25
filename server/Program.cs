@@ -10,6 +10,12 @@ builder.Services.AddSingleton<ReadingsStore>();
 // Z-score anomaly detection
 builder.Services.AddSingleton<AnomalyDetector>();
 
+// Real-time broadcaster: no-op for now, replaced by SignalR.
+builder.Services.AddSingleton<IReadingBroadcaster, NullReadingBroadcaster>();
+
+// Shared store -> detect -> broadcast pipeline for POST and the simulator.
+builder.Services.AddSingleton<ReadingIngestor>();
+
 // 1. Define the CORS policy
 builder.Services.AddCors(options =>
 {
@@ -29,6 +35,8 @@ app.UseHttpsRedirection();
 app.UseCors("AllowAngularClient");
 
 app.UseAuthorization();
+
+// Readings + anomalies are served by attribute-routed controllers (see Controllers/).
 app.MapControllers();
 
 // Demo endpoint to confirm the server is running.
