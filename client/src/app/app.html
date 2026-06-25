@@ -1,0 +1,23 @@
+<main class="container">
+  <h1>.NET + Angular Heartbeat</h1>
+  <p>Check whether the API server is up and running.</p>
+
+  <button type="button" (click)="checkHeartbeat()" [disabled]="loading()">
+    {{ loading() ? 'Checking…' : 'Check heartbeat' }}
+  </button>
+
+  @if (heartbeat(); as hb) {
+    <section class="status status--ok">
+      <strong>{{ hb.status }}</strong>
+      <span>{{ hb.message }}</span>
+      <small>{{ hb.timestamp }}</small>
+    </section>
+  }
+
+  @if (error(); as err) {
+    <section class="status status--error">
+      <strong>Error</strong>
+      <span>{{ err }}</span>
+    </section>
+  }
+</main>

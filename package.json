@@ -1,0 +1,20 @@
+{
+  "name": "dotnet-angular-cdk",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Showcase full-stack project .NET, Angular",
+  "license": "MIT",
+  "author": "Sergii Sokurenko",
+  "scripts": {
+    "postinstall": "npm run install:client && npm run install:server",
+    "install:client": "npm --prefix client install",
+    "install:server": "dotnet restore server",
+    "client": "npm --prefix client start",
+    "server": "dotnet run --project server --launch-profile http",
+    "dev": "concurrently -k -n client,server -c blue,green \"npm run client\" \"npm run server\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
