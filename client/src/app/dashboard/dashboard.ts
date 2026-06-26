@@ -7,6 +7,7 @@ import { SignalRService } from '../services/signalr.service';
 import { SensorDataService, SensorStatus } from '../services/sensor-data.service';
 import { SensorCard } from './sensor-card/sensor-card';
 import { AnomalyList } from './anomaly-list/anomaly-list';
+import { ReadingsChart } from './readings-chart/readings-chart';
 
 /**
  * Single-page dashboard shell (SPEC 2.1): header with title, LIVE/OFFLINE badge,
@@ -15,7 +16,15 @@ import { AnomalyList } from './anomaly-list/anomaly-list';
  */
 @Component({
   selector: 'app-dashboard',
-  imports: [AsyncPipe, DatePipe, MatToolbarModule, MatIconModule, SensorCard, AnomalyList],
+  imports: [
+    AsyncPipe,
+    DatePipe,
+    MatToolbarModule,
+    MatIconModule,
+    SensorCard,
+    AnomalyList,
+    ReadingsChart
+  ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })

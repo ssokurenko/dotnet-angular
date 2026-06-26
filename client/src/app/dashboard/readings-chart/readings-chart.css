@@ -1,0 +1,39 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.readings-chart {
+  background: var(--card-background);
+  padding: 1.25rem;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.readings-chart__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.readings-chart__title {
+  font-weight: 600;
+}
+
+/* Compact the sensor toggle. */
+.readings-chart__header mat-button-toggle-group {
+  --mat-standard-button-toggle-height: 32px;
+  font-size: 0.8rem;
+}
+
+/* Chart.js needs a sized, positioned container; flex-fill to match the panel height. */
+.readings-chart__canvas {
+  position: relative;
+  flex: 1;
+  min-height: 12rem;
+}

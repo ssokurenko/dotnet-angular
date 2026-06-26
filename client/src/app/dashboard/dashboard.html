@@ -50,9 +50,14 @@
     }
   </section>
 
-  <!-- Anomaly list and chart (FEATURE-12) mount here. -->
+  <!-- Anomaly list and readings chart. -->
   <section class="panels">
     <app-anomaly-list />
-    <div class="panel panel--placeholder">Chart — FEATURE-12</div>
+    <!-- Lazy-load the chart (and Chart.js) so it stays out of the initial bundle. -->
+    @defer (on idle) {
+      <app-readings-chart />
+    } @placeholder {
+      <div class="panel panel--placeholder">Loading chart…</div>
+    }
   </section>
 </main>

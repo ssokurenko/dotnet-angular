@@ -1,0 +1,18 @@
+<mat-card class="readings-chart">
+  <div class="readings-chart__header">
+    <span class="readings-chart__title">Last 20 readings</span>
+    <mat-button-toggle-group
+      [value]="selected()"
+      (change)="select($event.value)"
+      hideSingleSelectionIndicator
+      aria-label="Sensor">
+      <mat-button-toggle value="temperature">Temp</mat-button-toggle>
+      <mat-button-toggle value="humidity">Humidity</mat-button-toggle>
+      <mat-button-toggle value="co2">CO₂</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div class="readings-chart__canvas">
+    <canvas #canvas></canvas>
+  </div>
+</mat-card>
