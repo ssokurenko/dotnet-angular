@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { AsyncPipe, DatePipe, DecimalPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable, combineLatest, fromEvent, map, merge, shareReplay, startWith } from 'rxjs';
 import { SignalRService } from '../services/signalr.service';
-import { SensorDataService } from '../services/sensor-data.service';
+import { SensorDataService, SensorStatus } from '../services/sensor-data.service';
+import { SensorCard } from './sensor-card/sensor-card';
 
 /**
  * Single-page dashboard shell (SPEC 2.1): header with title, LIVE/OFFLINE badge,
@@ -14,7 +15,7 @@ import { SensorDataService } from '../services/sensor-data.service';
  */
 @Component({
   selector: 'app-dashboard',
-  imports: [AsyncPipe, DatePipe, DecimalPipe, MatToolbarModule, MatChipsModule, MatIconModule],
+  imports: [AsyncPipe, DatePipe, MatToolbarModule, MatChipsModule, MatIconModule, SensorCard],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -43,6 +44,11 @@ export class Dashboard implements OnInit, OnDestroy {
     startWith(false),
     shareReplay(1)
   );
+
+  /** Traffic-light status for a sensor value (delegates to the state service). */
+  protected statusFor(sensorType: string, value: number): SensorStatus {
+    return this.data.statusFor(sensorType, value);
+  }
 
   async ngOnInit(): Promise<void> {
     await this.data.hydrate();

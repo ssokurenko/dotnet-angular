@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" class="dashboard-header">
-  <mat-icon class="header-logo">eco</mat-icon>
+  <img src="/greenhouse-monitor-logo.png" alt="Greenhouse Monitor logo" class="header-logo" />
   <span class="header-title">Greenhouse Monitor</span>
 
   <span class="header-spacer"></span>
@@ -26,21 +26,27 @@
 </mat-toolbar>
 
 <main class="dashboard-body">
-  <!-- Sensor cards (FEATURE-10) — temporary inline tiles until SensorCardComponent lands. -->
+  <!-- Sensor cards (SPEC 2.1). -->
   <section class="cards-grid">
     @if (currentReading$ | async; as reading) {
-      <div class="tile">
-        <span class="tile-label">Temperature</span>
-        <span class="tile-value">{{ reading.temperature | number: '1.1-1' }} °C</span>
-      </div>
-      <div class="tile">
-        <span class="tile-label">Humidity</span>
-        <span class="tile-value">{{ reading.humidity | number: '1.1-1' }} %</span>
-      </div>
-      <div class="tile">
-        <span class="tile-label">CO₂</span>
-        <span class="tile-value">{{ reading.co2Ppm | number }} ppm</span>
-      </div>
+      <app-sensor-card
+        label="Temperature"
+        unit="°C"
+        [value]="reading.temperature"
+        [fractionDigits]="1"
+        [status]="statusFor('temperature', reading.temperature)" />
+      <app-sensor-card
+        label="Humidity"
+        unit="%"
+        [value]="reading.humidity"
+        [fractionDigits]="1"
+        [status]="statusFor('humidity', reading.humidity)" />
+      <app-sensor-card
+        label="CO₂"
+        unit="ppm"
+        [value]="reading.co2Ppm"
+        [fractionDigits]="0"
+        [status]="statusFor('co2', reading.co2Ppm)" />
     } @else {
       <div class="tile tile--empty">Waiting for sensor data…</div>
     }

@@ -1,0 +1,6 @@
+<mat-card class="sensor-card" [attr.data-status]="status">
+  <span class="sensor-card__label">{{ label }}</span>
+  <span class="sensor-card__value">
+    {{ displayValue() | number: format }}<span class="sensor-card__unit">{{ unit }}</span>
+  </span>
+</mat-card>

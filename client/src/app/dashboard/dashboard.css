@@ -6,10 +6,15 @@
 
 .header-logo {
   flex: 0 0 auto;
+  height: 48px;
+  width: 48px;
+  object-fit: cover;
+  border-radius: 2px;
 }
 
 .header-title {
-  font-weight: 500;
+  font-weight: 600;
+  color: #16a34a;
 }
 
 .header-spacer {
@@ -97,13 +102,14 @@
 
 .cards-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
+  /* Always three across; cards shrink to fit on mobile. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
 }
 
 @media (min-width: 768px) {
   .cards-grid {
-    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
   }
 }
 
@@ -115,18 +121,6 @@
   border-radius: 0.75rem;
   background: var(--mat-sys-surface-container, #f3f4f6);
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
-}
-
-.tile-label {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  opacity: 0.7;
-}
-
-.tile-value {
-  font-size: 1.75rem;
-  font-weight: 600;
 }
 
 .tile--empty {
