@@ -6,6 +6,7 @@ import { Observable, combineLatest, fromEvent, map, merge, shareReplay, startWit
 import { SignalRService } from '../services/signalr.service';
 import { SensorDataService, SensorStatus } from '../services/sensor-data.service';
 import { SensorCard } from './sensor-card/sensor-card';
+import { AnomalyList } from './anomaly-list/anomaly-list';
 
 /**
  * Single-page dashboard shell (SPEC 2.1): header with title, LIVE/OFFLINE badge,
@@ -14,7 +15,7 @@ import { SensorCard } from './sensor-card/sensor-card';
  */
 @Component({
   selector: 'app-dashboard',
-  imports: [AsyncPipe, DatePipe, MatToolbarModule, MatIconModule, SensorCard],
+  imports: [AsyncPipe, DatePipe, MatToolbarModule, MatIconModule, SensorCard, AnomalyList],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })

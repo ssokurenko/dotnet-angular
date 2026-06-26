@@ -1,6 +1,7 @@
 .sensor-card {
   --accent: #16a34a;
   position: relative;
+  background: var(--card-background);
   display: flex;
   flex-direction: column;
   gap: 0.4rem;

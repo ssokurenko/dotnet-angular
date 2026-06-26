@@ -1,0 +1,30 @@
+<mat-card class="anomaly-list">
+  <div class="anomaly-list__header">
+    <mat-icon>warning_amber</mat-icon>
+    <span>Anomalies</span>
+  </div>
+
+  @if (anomalies$ | async; as anomalies) {
+    @if (anomalies.length) {
+      <ul #list class="anomaly-list__items">
+        @for (anomaly of anomalies; track anomaly.id) {
+          <li class="anomaly-item" [attr.data-sensor]="anomaly.sensorType">
+            <mat-icon class="anomaly-item__icon">{{ iconFor(anomaly.sensorType) }}</mat-icon>
+            <div class="anomaly-item__body">
+              <div class="anomaly-item__top">
+                <span class="anomaly-item__type">{{ labelFor(anomaly.sensorType) }}</span>
+                <span class="anomaly-item__value">
+                  {{ anomaly.value | number: '1.0-1' }} {{ unitFor(anomaly.sensorType) }}
+                </span>
+                <span class="anomaly-item__time">{{ anomaly.detectedAt | date: 'mediumTime' }}</span>
+              </div>
+              <div class="anomaly-item__reason">{{ anomaly.reason }}</div>
+            </div>
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="anomaly-list__empty">No anomalies detected</div>
+    }
+  }
+</mat-card>
