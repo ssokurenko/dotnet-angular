@@ -1,0 +1,54 @@
+<mat-toolbar color="primary" class="dashboard-header">
+  <mat-icon class="header-logo">eco</mat-icon>
+  <span class="header-title">Greenhouse Monitor</span>
+
+  <span class="header-spacer"></span>
+
+  @if (lastUpdated$ | async; as updated) {
+    <span class="header-updated">Updated {{ updated | date: 'mediumTime' }}</span>
+  }
+
+  @if (hasHeartbeat$ | async) {
+    <mat-chip-set aria-label="Connection status" class="connection-badge">
+      @if (isLive$ | async) {
+        <mat-chip highlighted class="chip-live">
+          <mat-icon matChipAvatar class="live-dot">circle</mat-icon>
+          LIVE
+        </mat-chip>
+      } @else {
+        <mat-chip highlighted class="chip-offline">
+          <mat-icon matChipAvatar>wifi_off</mat-icon>
+          OFFLINE
+        </mat-chip>
+      }
+    </mat-chip-set>
+  }
+</mat-toolbar>
+
+<main class="dashboard-body">
+  <!-- Sensor cards (FEATURE-10) — temporary inline tiles until SensorCardComponent lands. -->
+  <section class="cards-grid">
+    @if (currentReading$ | async; as reading) {
+      <div class="tile">
+        <span class="tile-label">Temperature</span>
+        <span class="tile-value">{{ reading.temperature | number: '1.1-1' }} °C</span>
+      </div>
+      <div class="tile">
+        <span class="tile-label">Humidity</span>
+        <span class="tile-value">{{ reading.humidity | number: '1.1-1' }} %</span>
+      </div>
+      <div class="tile">
+        <span class="tile-label">CO₂</span>
+        <span class="tile-value">{{ reading.co2Ppm | number }} ppm</span>
+      </div>
+    } @else {
+      <div class="tile tile--empty">Waiting for sensor data…</div>
+    }
+  </section>
+
+  <!-- Anomaly list (FEATURE-11) and chart (FEATURE-12) mount here. -->
+  <section class="panels">
+    <div class="panel panel--placeholder">Anomalies — FEATURE-11</div>
+    <div class="panel panel--placeholder">Chart — FEATURE-12</div>
+  </section>
+</main>

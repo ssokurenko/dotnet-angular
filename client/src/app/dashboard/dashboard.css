@@ -1,0 +1,164 @@
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.header-logo {
+  flex: 0 0 auto;
+}
+
+.header-title {
+  font-weight: 500;
+}
+
+.header-spacer {
+  flex: 1 1 auto;
+}
+
+.header-updated {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+/* M3 chip colours via design tokens (no ::ng-deep needed). */
+.chip-live {
+  --mdc-chip-elevated-container-color: #16a34a;
+  --mdc-chip-label-text-color: #ffffff;
+  --mdc-chip-with-avatar-avatar-shape-radius: 50%;
+}
+
+.chip-offline {
+  --mdc-chip-elevated-container-color: #d4183d;
+  --mdc-chip-label-text-color: #ffffff;
+  --mdc-chip-with-icon-icon-color: #ffffff;
+}
+
+/* Fade the badge in once the first status arrives. */
+.connection-badge {
+  animation: badge-fade-in 0.4s ease-out;
+}
+
+@keyframes badge-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pulsing dot while LIVE. */
+.chip-live .live-dot {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  border-radius: 50%;
+  color: #ffffff;
+  animation: live-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.7;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
+  }
+  70% {
+    transform: scale(1.1);
+    opacity: 1;
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0);
+  }
+  100% {
+    transform: scale(0.85);
+    opacity: 0.7;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip-live .live-dot {
+    animation: none;
+  }
+}
+
+.dashboard-body {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background: var(--mat-sys-surface-container, #f3f4f6);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+}
+
+.tile-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}
+
+.tile-value {
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.tile--empty {
+  grid-column: 1 / -1;
+  align-items: center;
+  opacity: 0.7;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .panels {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.panel {
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background: var(--mat-sys-surface-container, #f3f4f6);
+  min-height: 8rem;
+}
+
+.panel--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  border: 1px dashed rgb(0 0 0 / 0.2);
+  background: transparent;
+}

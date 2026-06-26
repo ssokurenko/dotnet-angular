@@ -16,7 +16,7 @@ export type ConnectionStatus = 'disconnected' | 'connected' | 'reconnecting';
 const HUB_URL = '/hubs/sensors';
 
 /** How often to ping the server while connected. */
-const HEARTBEAT_INTERVAL_MS = 15_000;
+const HEARTBEAT_INTERVAL_MS = 5_000;
 
 /**
  * Manages the SignalR hub connection and surfaces incoming readings, anomalies,
@@ -28,6 +28,9 @@ export class SignalRService {
   public sensorReading$ = new Subject<SensorReading>();
   public anomaly$ = new Subject<Anomaly>();
   public connectionStatus$ = new BehaviorSubject<string>('disconnected');
+
+  /** Emits the server time on each successful heartbeat ack. */
+  public heartbeat$ = new Subject<string>();
 
   private connection?: HubConnection;
   private heartbeatTimer?: ReturnType<typeof setInterval>;
@@ -78,13 +81,14 @@ export class SignalRService {
     this.connectionStatus$.next('disconnected');
   }
 
-  /** Invokes the hub `Heartbeat`. Failures are swallowed; reconnect handles drops. */
+  /** Invokes the hub `Heartbeat` and emits the ack. Failures are swallowed. */
   async sendHeartbeat(): Promise<void> {
     if (this.connection?.state !== HubConnectionState.Connected) {
       return;
     }
     try {
-      await this.connection.invoke('Heartbeat');
+      const ack = await this.connection.invoke<{ serverTime: string }>('Heartbeat');
+      this.heartbeat$.next(ack?.serverTime ?? new Date().toISOString());
     } catch {
       // Ignore — a real drop is handled by onreconnecting/onclose.
     }
@@ -92,6 +96,8 @@ export class SignalRService {
 
   private startHeartbeat(): void {
     this.stopHeartbeat();
+    // Ping immediately so the UI can confirm liveness without waiting a full interval.
+    void this.sendHeartbeat();
     this.heartbeatTimer = setInterval(() => void this.sendHeartbeat(), HEARTBEAT_INTERVAL_MS);
   }
 

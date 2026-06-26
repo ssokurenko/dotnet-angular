@@ -63,6 +63,7 @@ export class SensorDataService {
 
   /** Apply a new reading: set current, append to the capped window, stamp the time. */
   setReading(reading: SensorReading): void {
+    console.log('[SensorData] reading received', reading);
     this.currentReading$.next(reading);
 
     const window = [...this.readings$.value, reading];
