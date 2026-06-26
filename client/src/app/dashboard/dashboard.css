@@ -27,66 +27,76 @@
   white-space: nowrap;
 }
 
-/* M3 chip colours via design tokens (no ::ng-deep needed). */
-.chip-live {
-  --mdc-chip-elevated-container-color: #16a34a;
-  --mdc-chip-label-text-color: #ffffff;
-  --mdc-chip-with-avatar-avatar-shape-radius: 50%;
+/* Connection status indicator (plain elements — no Material chip). */
+.connection {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  animation: connection-fade-in 0.4s ease-out;
 }
 
-.chip-offline {
-  --mdc-chip-elevated-container-color: #d4183d;
-  --mdc-chip-label-text-color: #ffffff;
-  --mdc-chip-with-icon-icon-color: #ffffff;
+.connection--live {
+  color: #16a34a;
 }
 
-/* Fade the badge in once the first status arrives. */
-.connection-badge {
-  animation: badge-fade-in 0.4s ease-out;
+.connection--offline {
+  color: #dc2626; /* danger red */
 }
 
-@keyframes badge-fade-in {
+.connection__dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #16a34a;
+  animation: dot-blink 1.5s ease-in-out infinite;
+}
+
+.connection__icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes dot-blink {
+  0% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.6);
+  }
+  70% {
+    opacity: 1;
+    box-shadow: 0 0 0 5px rgba(22, 163, 74, 0);
+  }
+  100% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+  }
+}
+
+@keyframes connection-fade-in {
   from {
     opacity: 0;
-    transform: translateY(-4px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
-/* Pulsing dot while LIVE. */
-.chip-live .live-dot {
-  font-size: 14px;
-  width: 14px;
-  height: 14px;
-  line-height: 14px;
-  border-radius: 50%;
-  color: #ffffff;
-  animation: live-pulse 1.5s ease-in-out infinite;
-}
+/* Mobile: hide the "Updated" time and the text label — icons only. */
+@media (max-width: 767px) {
+  .header-updated {
+    display: none;
+  }
 
-@keyframes live-pulse {
-  0% {
-    transform: scale(0.85);
-    opacity: 0.7;
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
-  }
-  70% {
-    transform: scale(1.1);
-    opacity: 1;
-    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0);
-  }
-  100% {
-    transform: scale(0.85);
-    opacity: 0.7;
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  .connection__label {
+    display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .chip-live .live-dot {
+  .connection__dot {
     animation: none;
   }
 }

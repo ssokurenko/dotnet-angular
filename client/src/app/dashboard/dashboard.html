@@ -9,19 +9,17 @@
   }
 
   @if (hasHeartbeat$ | async) {
-    <mat-chip-set aria-label="Connection status" class="connection-badge">
-      @if (isLive$ | async) {
-        <mat-chip highlighted class="chip-live">
-          <mat-icon matChipAvatar class="live-dot">circle</mat-icon>
-          LIVE
-        </mat-chip>
-      } @else {
-        <mat-chip highlighted class="chip-offline">
-          <mat-icon matChipAvatar>wifi_off</mat-icon>
-          OFFLINE
-        </mat-chip>
-      }
-    </mat-chip-set>
+    @if (isLive$ | async) {
+      <span class="connection connection--live" aria-label="Live">
+        <span class="connection__dot"></span>
+        <span class="connection__label">LIVE</span>
+      </span>
+    } @else {
+      <span class="connection connection--offline" aria-label="Offline">
+        <mat-icon class="connection__icon">wifi_off</mat-icon>
+        <span class="connection__label">OFFLINE</span>
+      </span>
+    }
   }
 </mat-toolbar>
 

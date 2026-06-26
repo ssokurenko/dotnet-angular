@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable, combineLatest, fromEvent, map, merge, shareReplay, startWith } from 'rxjs';
 import { SignalRService } from '../services/signalr.service';
@@ -15,7 +14,7 @@ import { SensorCard } from './sensor-card/sensor-card';
  */
 @Component({
   selector: 'app-dashboard',
-  imports: [AsyncPipe, DatePipe, MatToolbarModule, MatChipsModule, MatIconModule, SensorCard],
+  imports: [AsyncPipe, DatePipe, MatToolbarModule, MatIconModule, SensorCard],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
