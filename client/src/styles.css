@@ -5,6 +5,12 @@
 
 @import 'tailwindcss';
 
+:root {
+  /* Primary brand colour. */
+  --brand-primary: #00abde;
+  --brand-primary-rgb: 0, 171, 222;
+}
+
 html,
 body {
   height: 100%;

@@ -5,9 +5,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  /* Fluid padding so three cards fit a phone; roomy on desktop. */
-  padding: clamp(0.6rem, 2.5vw, 1.25rem);
-  padding-left: clamp(0.75rem, 3vw, 1.5rem);
+  padding: 1.25rem;
+  padding-left: 1.5rem;
   overflow: hidden;
 }
 
@@ -16,7 +15,7 @@
   content: '';
   position: absolute;
   inset: 0 auto 0 0;
-  width: clamp(3px, 1vw, 5px);
+  width: 0.3rem;
   background: var(--accent);
 }
 
@@ -29,7 +28,7 @@
 }
 
 .sensor-card__label {
-  font-size: clamp(0.6rem, 2vw, 0.8rem);
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   opacity: 0.7;
@@ -37,7 +36,7 @@
 }
 
 .sensor-card__value {
-  font-size: clamp(1.1rem, 5vw, 2rem);
+  font-size: 2rem;
   font-weight: 600;
   color: var(--accent);
   transition: color 0.3s ease;
@@ -47,7 +46,28 @@
 
 .sensor-card__unit {
   margin-left: 0.2rem;
-  font-size: clamp(0.65rem, 2vw, 1rem);
+  font-size: 1rem;
   font-weight: 500;
   opacity: 0.7;
+}
+
+/* Mobile: shrink padding and type so three cards still fit a phone. */
+@media (max-width: 767px) {
+  .sensor-card {
+    padding: 0.6rem;
+    padding-left: 0.75rem;
+    gap: 0.25rem;
+  }
+
+  .sensor-card__label {
+    font-size: 0.65rem;
+  }
+
+  .sensor-card__value {
+    font-size: 1.25rem;
+  }
+
+  .sensor-card__unit {
+    font-size: 0.7rem;
+  }
 }

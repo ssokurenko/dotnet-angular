@@ -1,6 +1,8 @@
 :host {
   display: block;
   height: 100%;
+  /* Allow the chart to shrink with its grid cell instead of forcing it wider. */
+  min-width: 0;
 }
 
 .readings-chart {
@@ -8,6 +10,7 @@
   padding: 1.25rem;
   height: 100%;
   box-sizing: border-box;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -25,10 +28,48 @@
   font-weight: 600;
 }
 
-/* Compact the sensor toggle. */
+/* Inset "cut-out" sensor toggle — a groove carved into the card with the
+   selected segment lifting out as a brand pill. */
 .readings-chart__header mat-button-toggle-group {
-  --mat-standard-button-toggle-height: 32px;
-  font-size: 0.8rem;
+  --mat-standard-button-toggle-label-text-size: 0.8rem;
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: none;
+  /* Same corner radius as the cards. */
+  border-radius: var(--mat-sys-corner-medium);
+  /* Recessed groove: faint brand tint + inner bevel shadow. */
+  background: rgba(var(--brand-primary-rgb), 0.07);
+  box-shadow:
+    inset 0 2px 4px rgb(0 0 0 / 0.16),
+    inset 0 -1px 0 rgb(255 255 255 / 0.65);
+  overflow: hidden;
+}
+
+/* Flatten the default segments; the groove + floating pill do the work. */
+.readings-chart__header ::ng-deep .mat-button-toggle-appearance-standard {
+  border: none;
+  /* Concentric with the groove (outer radius minus the 3px inset). */
+  border-radius: calc(var(--mat-sys-corner-medium) - 3px);
+  background: transparent;
+  color: rgb(0 0 0 / 0.62);
+  font-weight: 600;
+}
+
+.readings-chart__header ::ng-deep .mat-button-toggle + .mat-button-toggle {
+  border-left: none;
+}
+
+/* Selected segment lifts out of the groove as a white pill with brand text. */
+.readings-chart__header ::ng-deep .mat-button-toggle-checked {
+  background: #ffffff;
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.28),
+    0 2px 5px rgb(0 0 0 / 0.16);
+}
+
+.readings-chart__header ::ng-deep .mat-button-toggle-checked .mat-button-toggle-label-content {
+  color: var(--brand-primary);
 }
 
 /* Chart.js needs a sized, positioned container; flex-fill to match the panel height. */
@@ -36,4 +77,5 @@
   position: relative;
   flex: 1;
   min-height: 12rem;
+  min-width: 0;
 }

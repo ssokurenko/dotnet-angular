@@ -1,6 +1,7 @@
 :host {
   display: block;
   height: 100%;
+  min-width: 0;
 }
 
 .anomaly-list {
@@ -96,6 +97,10 @@
   font-size: 0.85rem;
   opacity: 0.8;
   margin-top: 0.15rem;
+  /* Keep the description on one line, truncating with an ellipsis. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .anomaly-list__empty {
