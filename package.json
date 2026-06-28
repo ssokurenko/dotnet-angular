@@ -12,7 +12,9 @@
     "client": "npm --prefix client start",
     "server": "dotnet run --project server --launch-profile http",
     "start": "concurrently -k -n client,server -c blue,green \"npm run client\" \"npm run server\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test:server && npm run test:client",
+    "test:server": "dotnet test server.Tests",
+    "test:client": "npm --prefix client test -- --watch=false"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
