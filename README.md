@@ -1,4 +1,5 @@
-# Greenhouse Guard — IoT Monitoring Showcase
+# IoT Monitoring Showcase Project
+## Full-stack SaaS: .NET Core + Angular
 
 A compact full-stack demo of an **IoT telemetry monitoring** pipeline for a mock
 greenhouse. It showcases the core patterns of a real-time IoT dashboard:
@@ -14,6 +15,16 @@ greenhouse. It showcases the core patterns of a real-time IoT dashboard:
 
 **Stack:** .NET 10 (ASP.NET Core, SignalR, in-memory) · Angular 21 (standalone +
 signals, zoneless, RxJS) · Angular Material + Tailwind · Chart.js
+
+## Demo
+
+Live dashboard — sensor cards, anomaly feed, and trend chart updating in real time:
+
+![IoT Dashboard](assets/dotnet-angular-iot.png)
+
+**Video walkthrough** (click to play on YouTube):
+
+[![Watch the demo on YouTube](https://img.youtube.com/vi/GD7hmr7i-IM/hqdefault.jpg)](https://www.youtube.com/watch?v=GD7hmr7i-IM)
 
 ## Architecture notes
 
