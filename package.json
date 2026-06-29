@@ -7,7 +7,7 @@
   "author": "Sergii Sokurenko",
   "scripts": {
     "postinstall": "npm run install:client && npm run install:server",
-    "install:client": "npm --prefix client install",
+    "install:client": "cd client && npm install",
     "install:server": "dotnet restore server",
     "client": "npm --prefix client start",
     "server": "dotnet run --project server --launch-profile http",
